@@ -9,7 +9,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 15f;
-    [SerializeField] [Range(0f, 1f)] float floatingFactor = 1f;
+    [SerializeField] [Range(0f, 2f)] private float coyoteFactor = 1f;
+    private float tempCoyote = 0f;
+    private bool haveJumped = false;
+    private bool canIJump = false;
 
     [Header("Health")]
     public GameObject healthI;
@@ -26,8 +29,6 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         xScale = transform.localScale.x;
 
-
-
         healthScript = healthI.GetComponent<HealthUI>();
     }
 
@@ -36,9 +37,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Run();
         FlipSprite();
-        CanIJump();
         Jump();
         Tester();
+        print(coyoteFactor);
+    }
+
+    private void FixedUpdate()
+    {
+        CanIJump();
     }
 
     private void Tester()
@@ -61,20 +67,23 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space) && CanIJump())
+        if (Input.GetKeyDown(KeyCode.Space) && canIJump && coyoteFactor >= 0)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpVelocity);
+            haveJumped = true;
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             if(rb2d.velocity.y > 0)
             rb2d.velocity += new Vector2(rb2d.velocity.x, -rb2d.velocity.y * 1f);
+            
         }
     }
 
     // TODO Rename to onGround()
     //Called in jump to know whether or not the object can jump
-    public bool CanIJump()
+    // DER KAN IKKE VÆRE GAPS MED INGENTING UNDER, SKAL VÆRE ET OBJEKT FOR AT DET VIRKER
+    public void CanIJump()
     {
         // should probably be made into a vector2
         Vector3 leftSide = new Vector3(transform.localPosition.x - 0.5f, transform.localPosition.y -1f);
@@ -88,15 +97,29 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(rightSide, new Vector2(0, -0.2f));
         //print("Left side " + leftSidePhys.distance);
         //print("Right side "+ rightSidePhys.distance);
+        print(haveJumped);  
+        
+        
 
-
-        if(leftSidePhys.distance <= 0 && rightSidePhys.distance <= 0)
+        if(leftSidePhys.distance <= 0 && !haveJumped || rightSidePhys.distance <= 0 && !haveJumped)
         {
-            return true;
+            tempCoyote = coyoteFactor;
+            canIJump = true;
         }
         else
         {
-            return false;
+            haveJumped = false;
+            tempCoyote -= Time.deltaTime;
+            if (tempCoyote >= 0)
+            {
+                canIJump = true;
+            }
+            else
+            {
+
+                canIJump = false;
+            }
+           
         }
     }
 
