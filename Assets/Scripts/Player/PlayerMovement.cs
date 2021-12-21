@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         FlipSprite();
         Jump();
         Tester();
-        print(coyoteFactor);
     }
 
     private void FixedUpdate()
@@ -97,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(rightSide, new Vector2(0, -0.2f));
         //print("Left side " + leftSidePhys.distance);
         //print("Right side "+ rightSidePhys.distance);
-        print(haveJumped);  
+        //print(haveJumped);  
         
         
 
