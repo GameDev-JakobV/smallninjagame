@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 15f;
-    [SerializeField] [Range(0f, 2f)] private float coyoteFactor = 1f;
+    [SerializeField] [Range(0f, 0.5f)] private float coyoteFactor = 1f;
     private float tempCoyote = 0f;
     private bool haveJumped = false;
     private bool canIJump = false;
@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Health")]
     public GameObject healthI;
     private HealthUI healthScript;
-
 
     private Rigidbody2D rb2d;
     private float xScale;
@@ -28,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         xScale = transform.localScale.x;
-
         healthScript = healthI.GetComponent<HealthUI>();
     }
 
@@ -36,14 +34,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Run();
+        CanIJump();
         FlipSprite();
         Jump();
         Tester();
-    }
-
-    private void FixedUpdate()
-    {
-        CanIJump();
     }
 
     private void Tester()
@@ -57,6 +51,17 @@ public class PlayerMovement : MonoBehaviour
             healthScript.GainHealth();
         }
     }
+
+    private void Dash()
+    {
+        //Stop downward movement 
+
+        //Apply movement in the facing direction
+
+        //stop after a certain amount of time
+    }
+
+    
 
     private void Run()
     {
@@ -75,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if(rb2d.velocity.y > 0)
             rb2d.velocity += new Vector2(rb2d.velocity.x, -rb2d.velocity.y * 1f);
-            
         }
     }
 
@@ -88,8 +92,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 leftSide = new Vector3(transform.localPosition.x - 0.5f, transform.localPosition.y -1f);
         Vector3 rightSide = new Vector3(transform.localPosition.x + 0.5f, transform.localPosition.y - 1f);
 
-        var leftSidePhys = Physics2D.Raycast(leftSide, new Vector2(0, -0.2f));
-        var rightSidePhys = Physics2D.Raycast(rightSide, new Vector2(0, -0.2f));
+        LayerMask layerMask = LayerMask.GetMask("Ground");
+
+        var leftSidePhys = Physics2D.Raycast(leftSide, new Vector2(0, -0.2f), 20f, layerMask);
+        var rightSidePhys = Physics2D.Raycast(rightSide, new Vector2(0, -0.2f), 20f, layerMask);
 
         //debugging
         Debug.DrawRay(leftSide, new Vector2 (0, -0.2f));
@@ -118,7 +124,6 @@ public class PlayerMovement : MonoBehaviour
 
                 canIJump = false;
             }
-           
         }
     }
 

@@ -33,9 +33,17 @@ public class HealthUI : MonoBehaviour
                 hearts[i].color = new Color(255, 255, 255, 0);
             }
         }
-
     }
 
+
+    public void Death()
+    {
+        //Kill player object
+
+        //Show deathScreen
+
+        //Return to last checkpoint
+    }
 
     // should maybe not be able to into MINUS but idc at this moment
     public void TakeDamage()
