@@ -8,7 +8,7 @@ public class WhiteHead : MonoBehaviour
     Rigidbody2D rb2d;
     public Vector3 startPosition;
 
-    private bool isAttacking = false;
+    public bool isAttacking { get; set; }
     private float xScale = 0;
 
     [Header("Movement")]
@@ -27,10 +27,10 @@ public class WhiteHead : MonoBehaviour
     }
 
 
-
     // Start is called before the first frame update
     void Start()
     {
+        isAttacking = false;
         detection = GetComponent<CircleCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
@@ -39,6 +39,7 @@ public class WhiteHead : MonoBehaviour
 
     private void Update()
     {
+
         FlipSprite();
         // TODO add patrol range so that it doesnt look so rigid
         if (!isAttacking)
@@ -65,16 +66,15 @@ public class WhiteHead : MonoBehaviour
     }
     #endregion
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // skal have invulnerability frames, men det skal ske i animationen 
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag != "Collider")
+        if (collision.tag == "DamageDealer")
         {
-            if (collision.tag == "DamageDealer")
-            {
-                var temp = collision.gameObject.GetComponent<DamageToDeal>();
-                TakeDamage(temp.MySwordDamage);
-                DoIDie();
-            }
+            var temp = collision.GetComponent<DamageToDeal>();
+            Debug.Log(temp.MySwordDamage);
+            TakeDamage(temp.MySwordDamage);
+            DoIDie();
         }
     }
 
@@ -124,4 +124,6 @@ public class WhiteHead : MonoBehaviour
         rb2d.velocity = transform.up * speed;
         //Debug.DrawRay(transform.position, rb2d.velocity, Color.black);
     }
+
+
 }

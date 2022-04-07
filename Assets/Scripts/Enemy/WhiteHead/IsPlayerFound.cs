@@ -12,11 +12,18 @@ public class IsPlayerFound : MonoBehaviour
         whiteHead = Parent.GetComponent<WhiteHead>();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            whiteHead.isAttacking = true;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("dwadaw");
             whiteHead.MoveAndTurn(collision);
         }
     }
@@ -25,8 +32,7 @@ public class IsPlayerFound : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("dwadaw");
-            whiteHead.MoveBackToOrigin();
+            whiteHead.isAttacking = false;
         }
     }
 }

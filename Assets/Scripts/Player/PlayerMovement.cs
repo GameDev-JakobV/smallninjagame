@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //skal måske gøres med animation
     private void Dash()
     {
         //Stop downward movement 

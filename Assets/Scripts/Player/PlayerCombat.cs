@@ -26,8 +26,6 @@ public class PlayerCombat : MonoBehaviour
 
     public IEnumerator Hit()
     {
-
-
         DamageDeal.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         DamageDeal.SetActive(false);

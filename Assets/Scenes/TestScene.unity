@@ -832,11 +832,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.47
+      value: -7.91
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.28
+      value: -3.47
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1098,7 +1098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6422154863922566906, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6422154863922566907, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_Constraints
@@ -1167,6 +1167,10 @@ PrefabInstance:
     - target: {fileID: 8213564448159081124, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213564448159081124, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
+      propertyPath: m_TagString
+      value: Collider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
