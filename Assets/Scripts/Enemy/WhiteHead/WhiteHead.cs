@@ -67,7 +67,7 @@ public class WhiteHead : MonoBehaviour
     #endregion
 
     // skal have invulnerability frames, men det skal ske i animationen 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DamageDealer")
         {
