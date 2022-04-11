@@ -243,10 +243,10 @@ MonoBehaviour:
   DamageDeal: {fileID: 1228225700}
   PrefabBow: {fileID: 7700423983689562159, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
   Projectile: {fileID: 5792493037814544991, guid: 7432c6753caed394dabb83c2235a5449, type: 3}
-  SpeedOfProj: 2
+  SpeedOfProj: 800
   DistanceFromPlayer: 1.27
+  BowCharges: 9
   Cam: {fileID: 3264983992168799344}
-  test: {fileID: 8213564448159081124, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
 --- !u!212 &3264983990705421984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -310,9 +310,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: baf84c6fe98070046ac2edd96203ace5, type: 2}
   m_Interpolate: 0

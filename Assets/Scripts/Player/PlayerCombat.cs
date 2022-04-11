@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -17,16 +14,12 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] GameObject Projectile;
     [SerializeField] float SpeedOfProj = 800f;
     [SerializeField] float DistanceFromPlayer = 1f;
+    [SerializeField] float BowCharges = 9f;
 
-    [SerializeField] float EndTimeScale = 0.5f;
-    [SerializeField] float TimeTakenToFullySlow = 3f;
-    [SerializeField] float TimeTakenToFullySpeed = 1.5f;
-    float TimeElapsed = 0f;
     public Camera Cam;
     private GameObject Bow;
     private bool IsAiming = false;
 
-    public GameObject test;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +51,16 @@ public class PlayerCombat : MonoBehaviour
         yield return null;
     }
     
+    private void RechargeBow()
+    {
+        // Get UI ELEMENT
+
+        // SHOW CHARGES
+
+        // REGEN CHAGES
+
+        // TAKE AWAY CHARGES
+    }
 
     private void Aiming()
     {
@@ -66,8 +69,11 @@ public class PlayerCombat : MonoBehaviour
             Bow.SetActive(true);
             IsAiming = true;
             Transform TransformParent = GetComponentInParent<Transform>();
-            var parentPos = TransformParent.transform.position;
-            var pos = Cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 parentPos = TransformParent.transform.position;
+            Vector3 targetPos = Bow.transform.position;
+
+
+            Vector3 pos = Cam.ScreenToWorldPoint(Input.mousePosition);
             pos.z = 0f;
             //Debug.Log("Mouse Pos " + pos);
             //Debug.Log("ParentPos " + parentPos);
@@ -75,18 +81,11 @@ public class PlayerCombat : MonoBehaviour
 
 
             Vector3 direction = pos - parentPos;
-            Debug.DrawRay(parentPos, direction.normalized * DistanceFromPlayer);
-            RaycastHit2D ray = Physics2D.Raycast(parentPos, direction.normalized * DistanceFromPlayer);
-
-
             Vector3 BowPos = parentPos + direction.normalized * DistanceFromPlayer;
             Bow.transform.position = BowPos;
 
-            Vector3 targetPos = Bow.transform.position;
-            Vector3 thisPos = TransformParent.transform.position;
-
-            targetPos.x = targetPos.x - thisPos.x;
-            targetPos.y = targetPos.y - thisPos.y;
+            targetPos.x = targetPos.x - parentPos.x;
+            targetPos.y = targetPos.y - parentPos.y;
 
             float angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
             Bow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -94,9 +93,8 @@ public class PlayerCombat : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 GameObject Arrow = Instantiate(Projectile, Bow.transform.position, Bow.transform.rotation);
-                //Arrow.GetComponent<Rigidbody2D>().AddForce(direction.normalized * SpeedOfProj);
-                
-                Arrow.GetComponent<Arrow>().addforce(direction.normalized * SpeedOfProj);
+                Arrow.GetComponent<Arrow>().GetDirection(direction.normalized * SpeedOfProj);
+                BowCharges -= 3f;
             }
         }
         else

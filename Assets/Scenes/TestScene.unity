@@ -786,18 +786,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
-      propertyPath: SpeedOfProj
-      value: 800
-      objectReference: {fileID: 0}
-    - target: {fileID: 3264983990705421985, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
-      propertyPath: m_Mass
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3264983990705421985, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3264983990705421987, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1003,14 +991,6 @@ PrefabInstance:
     - target: {fileID: 5765818395795476301, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 64.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 6422154863922566906, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6422154863922566909, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8213564448159081124, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_Name
