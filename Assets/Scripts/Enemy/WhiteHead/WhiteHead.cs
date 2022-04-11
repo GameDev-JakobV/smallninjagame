@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WhiteHead : MonoBehaviour
 {
-    CircleCollider2D detection;
+    // TODO: Bug hvis white er vinkelret med player og på lige grund, så drejer den ikke altid og kører i en lige linje
+
+
     Rigidbody2D rb2d;
     public Vector3 startPosition;
 
@@ -17,7 +19,7 @@ public class WhiteHead : MonoBehaviour
     [SerializeField] [Range(0f, 50f)] float attackingSpeed = 5f;
     [SerializeField] [Range(0f, 800f)] float attackingAngleChangeSpeed = 30f;
 
-    //TODO Make it do damage
+
     [SerializeField] int Hp = 50;
 
     public int MyHp
@@ -26,12 +28,10 @@ public class WhiteHead : MonoBehaviour
         set { Hp = value; }
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
         isAttacking = false;
-        detection = GetComponent<CircleCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         xScale = transform.localScale.x;
@@ -47,7 +47,6 @@ public class WhiteHead : MonoBehaviour
             MoveBackToOrigin();
         }
     }
-
 
     #region Living entity variables
     void DoIDie()
@@ -124,6 +123,4 @@ public class WhiteHead : MonoBehaviour
         rb2d.velocity = transform.up * speed;
         //Debug.DrawRay(transform.position, rb2d.velocity, Color.black);
     }
-
-
 }
