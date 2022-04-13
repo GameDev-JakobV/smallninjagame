@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(this);
         rb2d = GetComponent<Rigidbody2D>();
         xScale = transform.localScale.x;
         healthScript = healthI.GetComponent<HealthUI>();

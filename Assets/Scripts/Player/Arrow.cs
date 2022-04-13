@@ -14,8 +14,6 @@ public class Arrow : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.AddForce(Velocity);
-        Debug.Log(rb2d.velocity);
-        Debug.Log(Velocity);
     }
 
     private void Update()

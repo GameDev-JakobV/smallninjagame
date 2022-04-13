@@ -556,10 +556,10 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 14.82, y: 8.63}
   m_EdgeRadius: 0
---- !u!1 &1731074732 stripped
+--- !u!1 &1459142403 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3264983990705421987, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
-  m_PrefabInstance: {fileID: 3264983992335295503}
+  m_CorrespondingSourceObject: {fileID: 3874034027134917237, guid: 9d6caa00857448e4e91896038200b7d5, type: 3}
+  m_PrefabInstance: {fileID: 5190581981109392609}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1784311180
 GameObject:
@@ -786,6 +786,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: ArrowUI
+      value: 
+      objectReference: {fileID: 1459142403}
+    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: CostOfArrow
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: MaxArrowCharges
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: DistanceFromPlayer
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3264983990705421984, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3264983990705421987, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_Name
       value: Player
@@ -847,10 +867,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5190581981229089758, guid: 9d6caa00857448e4e91896038200b7d5, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1731074732}
+    - target: {fileID: 3874034027134917237, guid: 9d6caa00857448e4e91896038200b7d5, type: 3}
+      propertyPath: m_Name
+      value: ArrowUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190581981229089756, guid: 9d6caa00857448e4e91896038200b7d5, type: 3}
+      propertyPath: m_Name
+      value: HeartsUI
+      objectReference: {fileID: 0}
     - target: {fileID: 5190581982641559609, guid: 9d6caa00857448e4e91896038200b7d5, type: 3}
       propertyPath: m_Name
       value: UI

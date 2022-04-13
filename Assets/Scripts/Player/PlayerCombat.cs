@@ -14,26 +14,40 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] GameObject Projectile;
     [SerializeField] float SpeedOfProj = 800f;
     [SerializeField] float DistanceFromPlayer = 1f;
-    [SerializeField] float BowCharges = 9f;
-
-    public Camera Cam;
-    private GameObject Bow;
+    [SerializeField] Camera Cam;
+    [SerializeField] float MaxArrowCharges = 4f;
+    [SerializeField] float CostOfArrow = 3f;
     private bool IsAiming = false;
+
+
+    [Header("UI")]
+    private GameObject Bow;
+
+    [Header("UI")]
+    public GameObject ArrowUI;
+    private ArrowUI ArrowUIScript;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ArrowUIScript = ArrowUI.GetComponent<ArrowUI>();
+        ArrowUIScript.CostOfArrow = CostOfArrow;
+        ArrowUIScript.MaxArrowCharges = CostOfArrow * MaxArrowCharges;
+        ArrowUIScript.LoadUI();
+
         Bow = Instantiate(PrefabBow, transform.position, Quaternion.identity);
+        //Bow.transform.parent = gameObject.transform;
         Bow.SetActive(false);
         DamageDeal.SetActive(false);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         Aiming();
-        
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (!DamageDeal.activeSelf)
@@ -43,6 +57,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+
     private IEnumerator Hit()
     {
         DamageDeal.SetActive(true);
@@ -51,8 +66,9 @@ public class PlayerCombat : MonoBehaviour
         yield return null;
     }
     
-    private void RechargeBow()
+    private void ShootBow()
     {
+        ArrowUIScript.ArrowFired();
         // Get UI ELEMENT
 
         // SHOW CHARGES
@@ -90,11 +106,11 @@ public class PlayerCombat : MonoBehaviour
             float angle = Mathf.Atan2(targetPos.y, targetPos.x) * Mathf.Rad2Deg;
             Bow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && ArrowUIScript.CanFire() == true)
             {
                 GameObject Arrow = Instantiate(Projectile, Bow.transform.position, Bow.transform.rotation);
                 Arrow.GetComponent<Arrow>().GetDirection(direction.normalized * SpeedOfProj);
-                BowCharges -= 3f;
+                ArrowUIScript.ArrowFired();
             }
         }
         else
@@ -102,6 +118,5 @@ public class PlayerCombat : MonoBehaviour
             IsAiming = false;
             Bow.SetActive(false);
         }
-        
     }
 }

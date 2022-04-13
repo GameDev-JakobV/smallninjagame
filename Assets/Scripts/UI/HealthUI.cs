@@ -6,32 +6,30 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    /// <summary>
-    /// REMEBER TO PUT NEW HEARTS IN TO THE LIST IF YOU ADD MORE OF THEM IN THE INSPECTOR
-    /// </summary>
+    [SerializeField] Image Heart;
+    [SerializeField] GameObject Parent;
+    private List<Image> hearts;
 
-    // Maybe should be private and a function to find them instead
-    public Image[] hearts;
-    public GameObject player;
-    public PlayerMovement playerMovement;
 
-    [SerializeField] int health = 3;
-    [SerializeField] [Range(0, 5)] int maxHealth = 5;
+    [SerializeField] int health = 8;
+    [SerializeField] [Range(0, 10)] int maxHealth = 10;
     
-    // Start is called before the first frame update
     void Start()
     {
-        playerMovement = player.GetComponent<PlayerMovement>();
-        for (int i = 0; i < hearts.Length; i++)
+        hearts = new List<Image>();
+        RectTransform rectTransformParent = Parent.GetComponent<RectTransform>(); 
+        RectTransform rectTransform = Heart.GetComponent<RectTransform>();
+        //Debug.Log(rectTransformParent.sizeDelta.y);
+        if (hearts.Count < health)
         {
-            if (i < health)
+            for (int i = hearts.Count; i < health; i++)
             {
-                hearts[i].color = new Color(255, 255, 255, 255);
-            }
-            else
-            {
-                hearts[i].color = new Color(255, 255, 255, 0);
-            }
+                Heart.transform.position = new Vector3 (rectTransform.sizeDelta.x * hearts.Count + rectTransformParent.sizeDelta.x * 0.05f, rectTransformParent.sizeDelta.y * 0.9f, 0f);
+                Image image = Instantiate(Heart, Heart.transform.position, Quaternion.identity);
+                image.transform.parent = gameObject.transform;
+                image.color = new Color(255, 255, 255, 255);
+                hearts.Add(image);
+            };
         }
     }
 
@@ -49,7 +47,7 @@ public class HealthUI : MonoBehaviour
     public void TakeDamage()
     {
         health--;
-        for (int i = 0; i < hearts.Length; i++)
+        for (int i = 0; i < hearts.Count; i++)
         {
             if (i < health)
             {
@@ -66,7 +64,7 @@ public class HealthUI : MonoBehaviour
     {
         if (health >= maxHealth) { return; }
         health++;
-        for (int i = 0; i < hearts.Length; i++)
+        for (int i = 0; i < hearts.Count; i++)
         {
             if (i < health)
             {
