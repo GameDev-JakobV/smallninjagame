@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44853163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 86.8144, y: 15.322446, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 14.993852, y: 4.4156904, z: 0.45871562}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -190,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.96
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -943,7 +943,7 @@ PrefabInstance:
     - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: Bow
       value: 
-      objectReference: {fileID: 44853163}
+      objectReference: {fileID: 669115395}
     - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: ArrowUI
       value: 

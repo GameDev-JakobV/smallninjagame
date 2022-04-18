@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &44853163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44853164}
+  - component: {fileID: 44853165}
+  m_Layer: 0
+  m_Name: BowParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44853164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44853163}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 14.993852, y: 4.4156904, z: 0.45871562}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5157443410580727140}
+  m_Father: {fileID: 3264983990705422014}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44853165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44853163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b101411ed62b14da8ae1b98d1d9e0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxArrowCharges: 4
+  ArrowCD: 0.4
+  SpeedOfProj: 800
+  Projectile: {fileID: 5792493037814544991, guid: 7432c6753caed394dabb83c2235a5449, type: 3}
+  player: {fileID: 3264983990705422015}
+  Bow1: {fileID: 5157443410580727142}
+  Cam: {fileID: 3264983992168799344}
+  DistanceFromZero: 1.2
+  ArrowUI: {fileID: 0}
 --- !u!1 &1228225700
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +265,7 @@ Transform:
   - {fileID: 3264983992168799375}
   - {fileID: 3264983992015885061}
   - {fileID: 1228225701}
+  - {fileID: 44853164}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -244,14 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackTiming: 0.2
   DamageDeal: {fileID: 1228225700}
-  PrefabBow: {fileID: 7700423983689562159, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
-  Projectile: {fileID: 5792493037814544991, guid: 7432c6753caed394dabb83c2235a5449, type: 3}
-  SpeedOfProj: 800
-  DistanceFromPlayer: 1.2
-  Cam: {fileID: 3264983992168799344}
-  MaxArrowCharges: 5
-  ArrowCD: 0.2
-  ArrowUI: {fileID: 0}
+  Bow: {fileID: 5157443410580727142}
 --- !u!212 &3264983990705421984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -519,3 +567,70 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3264983992168799347}
   m_Enabled: 1
+--- !u!1001 &3264983992048360777
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 44853164}
+    m_Modifications:
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700423983689562159, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+      propertyPath: m_Name
+      value: Bow
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+--- !u!4 &5157443410580727140 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7700423983689562157, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+  m_PrefabInstance: {fileID: 3264983992048360777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5157443410580727142 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7700423983689562159, guid: e2289cec62775ea4c8b3d37be2758e7e, type: 3}
+  m_PrefabInstance: {fileID: 3264983992048360777}
+  m_PrefabAsset: {fileID: 0}

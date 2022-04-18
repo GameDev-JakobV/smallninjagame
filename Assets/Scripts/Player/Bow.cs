@@ -12,7 +12,7 @@ public class Bow : MonoBehaviour
     public PlayerMovement player;
     public GameObject Bow1;
     public Camera Cam;
-    public float DistanceFromZero = 1.2f;
+    public float DistanceFromZero = 12.2f;
     [Header("UI")]
     public GameObject ArrowUI;
     private ArrowUI ArrowUIScript;
