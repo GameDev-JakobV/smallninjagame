@@ -441,7 +441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297012749}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4199245, y: -1.7490326, z: -1.2324698}
+  m_LocalPosition: {x: 9.46, y: -2.36, z: -1.2324698}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -647,8 +647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784311180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.98992455, y: -4.3809676, z: 1.2324698}
-  m_LocalScale: {x: 1.052317, y: 0.28126082, z: 1}
+  m_LocalPosition: {x: 18.075, y: -4.3809676, z: 1.2324698}
+  m_LocalScale: {x: 3.3580487, y: 0.28126082, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1297012750}
@@ -802,6 +802,10 @@ PrefabInstance:
       propertyPath: ArrowUI
       value: 
       objectReference: {fileID: 1459142403}
+    - target: {fileID: 1731074733, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: AttackTiming
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3264983990705421987, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_Name
       value: Player
@@ -812,11 +816,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.79
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.47
+      value: -4.43
       objectReference: {fileID: 0}
     - target: {fileID: 3264983990705422014, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
       propertyPath: m_LocalPosition.z
@@ -854,6 +858,14 @@ PrefabInstance:
       propertyPath: healthI
       value: 
       objectReference: {fileID: 958764861}
+    - target: {fileID: 3264983990705422015, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: DashSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3264983990705422015, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
+      propertyPath: LengthOfDash
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9071f8d452a49d459ca858a244c9938, type: 3}
 --- !u!1001 &5190581981109392609
@@ -982,11 +994,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5765818395795476301, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.94
+      value: 14.52
       objectReference: {fileID: 0}
     - target: {fileID: 5765818395795476301, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.71
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 5765818395795476301, guid: fb8ffb90fed9d9442979d6fab2fcc048, type: 3}
       propertyPath: m_LocalPosition.z

@@ -47,6 +47,7 @@ public class ArrowUI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Debug.Log(CurrentArrowCharges);
         if (CurrentArrowCharges < MaxArrowCharges)
         {
             CurrentArrowCharges += 0.02f;
@@ -60,12 +61,9 @@ public class ArrowUI : MonoBehaviour
         {
             return;
         }
-        Debug.Log(i);
-        Debug.Log(CurrentArrowCharges - i);
         if (i < 0)
         {
             i = 0;
-            //return;
         }
         if (i != 0)
         {
