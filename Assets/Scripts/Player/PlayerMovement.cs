@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     private bool Dashing = false;
     public float temp;
 
+    [Header("Wall Slide")]
+    [SerializeField] float SlidingSpeed = -2f;
+    private bool Wall = false;
 
     [Header("Health")]
     public GameObject healthI;
@@ -31,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private float xScale;
 
+    private Vector3 TopLeft, TopRight, BottomLeft, BottomRight;
+    SpriteRenderer BoxCol;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +45,18 @@ public class PlayerMovement : MonoBehaviour
         xScale = transform.localScale.x;
         healthScript = healthI.GetComponent<HealthUI>();
         DashTime = LengthOfDash / DashSpeed;
+
+        BoxCol = GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        BottomRight = new Vector2(transform.localPosition.x + (BoxCol.bounds.size.x / 2), transform.localPosition.y - (BoxCol.bounds.size.y / 2));
+        BottomLeft = new Vector2(transform.localPosition.x - (BoxCol.bounds.size.x / 2), transform.localPosition.y - (BoxCol.bounds.size.y / 2));
+        TopRight = new Vector2(transform.localPosition.x + (BoxCol.bounds.size.x / 2), transform.localPosition.y + (BoxCol.bounds.size.y / 2));
+        TopLeft = new Vector2(transform.localPosition.x - (BoxCol.bounds.size.x / 2), transform.localPosition.y + (BoxCol.bounds.size.y / 2));
         Run();
         OnGround();
         OnWall();   
@@ -91,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Run()
     {
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
         if(Dashing == false)
         {
             rb2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb2d.velocity.y);
@@ -99,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        
         if (Input.GetKeyDown(KeyCode.Space) && canIJump && coyoteFactor >= 0)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpVelocity);
@@ -114,10 +126,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnWall()
     {
-        var BoxCol = GetComponent<SpriteRenderer>();
+        RaycastHit2D Top = Physics2D.Raycast(TopLeft, new Vector2(-0.2f, 0f), 20f);
+        RaycastHit2D Bottom = Physics2D.Raycast(BottomLeft, new Vector2(-0.2f, 0f), 20f);
+
+        Debug.DrawRay(TopLeft, new Vector2(-0.2f, 0), Color.red);
+        Debug.DrawRay(BottomLeft, new Vector2(-0.2f, 0), Color.blue);
+        Debug.Log(Top.distance);
+        if(Top.distance <= 0.03f && Input.GetAxisRaw("Horizontal") == -1)
+        {
+            rb2d.velocity = new Vector2(0f, -1f);
+            Debug.Log(rb2d.velocity);
+        }
+
+
+        if (transform.localScale.x < 0)
+        {
+            
+
+
+        }
+        else if (transform.localScale.x > 0)
+        {
+
+        }
+
         
-        Debug.DrawRay(new Vector2(transform.localPosition.x, transform.localPosition.y), new Vector2(0, -2f));
-        Debug.Log(BoxCol.bounds.size.x);
+        
+        //Debug.DrawRay(BottomRight, new Vector2(0, -2f), Color.red);
+        //Debug.DrawRay(BottomLeft, new Vector2(0, -2f), Color.white);
+        //Debug.DrawRay(TopRight, new Vector2(0, 2f), Color.blue);
+        //Debug.DrawRay(TopLeft, new Vector2(0, 2f), Color.green);
     }
 
     // TODO REFACTOR sådan at variabler ikke instantieres i funktion
@@ -131,17 +169,19 @@ public class PlayerMovement : MonoBehaviour
 
         LayerMask layerMask = LayerMask.GetMask("Ground");
 
-        RaycastHit2D leftSidePhys = Physics2D.Raycast(leftSide, new Vector2(0, -0.2f), 20f, layerMask);
-        RaycastHit2D rightSidePhys = Physics2D.Raycast(rightSide, new Vector2(0, -0.2f), 20f, layerMask);
+        RaycastHit2D leftSidePhys = Physics2D.Raycast(BottomLeft, new Vector2(0, -0.2f), 20f, layerMask);
+        RaycastHit2D rightSidePhys = Physics2D.Raycast(BottomRight, new Vector2(0, -0.2f), 20f, layerMask);
+        Debug.DrawRay(BottomLeft, new Vector2(0, -0.2f), Color.red);
+        Debug.DrawRay(BottomRight, new Vector2(0, -0.2f), Color.blue);
 
         //debugging
-        Debug.DrawRay(leftSide, new Vector2 (0, -0.2f));
-        Debug.DrawRay(rightSide, new Vector2(0, -0.2f));
+        //Debug.DrawRay(BottomLeft, new Vector2(0, -0.2f), Color.red);
+        //Debug.DrawRay(BottomRight, new Vector2(0, -0.2f), Color.blue);
         //print("Left side " + leftSidePhys.distance);
         //print("Right side "+ rightSidePhys.distance);
         //print(haveJumped);  
 
-        if(leftSidePhys.distance <= 0 && !haveJumped || rightSidePhys.distance <= 0 && !haveJumped)
+        if (leftSidePhys.distance <= 0 && !haveJumped || rightSidePhys.distance <= 0 && !haveJumped)
         {
             tempCoyote = coyoteFactor;
             canIJump = true;
