@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         gameObject.GetComponent<Rigidbody2D>().velocity = direction;
-        RaycastHit2D Path = Physics2D.Raycast(gameObject.transform.position, direction);
-        Debug.DrawRay(gameObject.transform.position, direction, Color.red);
+        //RaycastHit2D Path = Physics2D.Raycast(gameObject.transform.position, direction);
+        //Debug.DrawRay(gameObject.transform.position, direction, Color.red);
     }
 }
