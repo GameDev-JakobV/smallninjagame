@@ -77,18 +77,18 @@ public class PlayerMovement : MonoBehaviour
         bounds = BoxCol.bounds;
         BottomRight = new Vector2(bounds.max.x, bounds.min.y);
         BottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        MiddleRight = new Vector2(bounds.max.x, bounds.max.y / 2);
-        MiddleLeft = new Vector2(bounds.min.x, bounds.max.y / 2);
+        //MiddleRight = new Vector2(bounds.max.x, bounds.min.y + (Mathf.Abs(bounds.min.y - bounds.max.y) / 2));
+        //MiddleLeft = new Vector2(bounds.min.x, bounds.min.y + (Mathf.Abs(bounds.min.y - bounds.max.y) / 2));
         TopRight = new Vector2(bounds.max.x, bounds.max.y);
         TopLeft = new Vector2(bounds.min.x, bounds.max.y);
     }
 
     private void RayCasts()
     {
-        TopL = Physics2D.Raycast(TopLeft, Vector2.left, -SkinWidth, LayerMask.GetMask("Ground"));
-        TopR = Physics2D.Raycast(TopRight, Vector2.right, SkinWidth, LayerMask.GetMask("Ground"));
-        BotL = Physics2D.Raycast(BottomLeft, Vector2.down, SkinWidth, LayerMask.GetMask("Ground"));
-        BotR = Physics2D.Raycast(BottomRight, Vector2.down, SkinWidth, LayerMask.GetMask("Ground"));
+        TopL = Physics2D.Raycast(TopLeft, Vector2.left, -SkinWidth * 2, LayerMask.GetMask("Ground"));
+        TopR = Physics2D.Raycast(TopRight, Vector2.right, SkinWidth * 2, LayerMask.GetMask("Ground"));
+        BotL = Physics2D.Raycast(BottomLeft, Vector2.down, SkinWidth * 2, LayerMask.GetMask("Ground"));
+        BotR = Physics2D.Raycast(BottomRight, Vector2.down, SkinWidth * 2, LayerMask.GetMask("Ground"));
     }
 
     private void Run()
@@ -200,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnGround()
     {
         Debug.DrawRay(BottomLeft, new Vector2(0, -0.2f), Color.red);
+
         Debug.DrawRay(BottomRight, new Vector2(0, -0.2f), Color.blue);
 
         if (BotL.collider is not null && !haveJumped || BotR.collider is not null && !haveJumped)

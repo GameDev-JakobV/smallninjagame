@@ -49,17 +49,18 @@ public class WhiteHead : MonoBehaviour
     }
 
     #region Living entity variables
-    void DoIDie()
+    private void DoIDie()
     {
         if (Hp <= 0) Die();
     }
 
-    void TakeDamage(int damageTaken)
+    private void TakeDamage(int damageTaken)
     {
         Hp = Hp - damageTaken;
+        DoIDie();
     }
 
-    void Die()
+    private void Die()
     {
         Destroy(gameObject);
     }
@@ -73,7 +74,6 @@ public class WhiteHead : MonoBehaviour
             var temp = collision.GetComponent<DamageToDeal>();
             Debug.Log(temp.MySwordDamage);
             TakeDamage(temp.MySwordDamage);
-            DoIDie();
         }
     }
 
@@ -82,7 +82,6 @@ public class WhiteHead : MonoBehaviour
         isAttacking = true;
         // Skal have en retning 
         Vector2 direction = (Vector2)collision.transform.position - rb2d.position;
-        //print(direction);
         // normalizere den til mellem 0 og 1, fordi det er vores transform.up
         direction.Normalize();
         // vi får en rotation mængde baseret på om linjerne
