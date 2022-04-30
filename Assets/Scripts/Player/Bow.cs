@@ -10,6 +10,7 @@ public class Bow : MonoBehaviour
     [SerializeField] GameObject Projectile;
 
     public PlayerMovement player;
+    //called Bow1 cause class is named Bow
     public GameObject Bow1;
     public Camera Cam;
     public float DistanceFromZero = 12.2f;

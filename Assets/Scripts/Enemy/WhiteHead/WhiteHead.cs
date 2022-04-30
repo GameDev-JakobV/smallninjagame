@@ -71,6 +71,7 @@ public class WhiteHead : MonoBehaviour
     {
         if (collision.tag == "DamageDealer")
         {
+            Debug.Log(collision.tag);
             var temp = collision.GetComponent<DamageToDeal>();
             Debug.Log(temp.MySwordDamage);
             TakeDamage(temp.MySwordDamage);

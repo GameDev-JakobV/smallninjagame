@@ -181,14 +181,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") == -1 && TopR.collider is null)
         {
             CharacterScale.x = xScale;
+            canIJump = true;
             WallSlid = true;
-
             rb2d.velocity = new Vector2(0f, -1f);
         }
         if (Input.GetAxisRaw("Horizontal") == 1 && TopL.collider is null)
         {
             CharacterScale.x = -xScale;
             WallSlid = true;
+            canIJump = true;
             rb2d.velocity = new Vector2(0f, -1f);
         }
         transform.localScale = CharacterScale;

@@ -15,9 +15,7 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         DamageDeal.SetActive(false);
-
     }
 
     // Update is called once per frame
