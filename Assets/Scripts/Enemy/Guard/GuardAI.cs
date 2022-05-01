@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class GuardAI : MonoBehaviour
 {
@@ -12,9 +9,9 @@ public class GuardAI : MonoBehaviour
     [SerializeField] float speed = 5f;
     public float RoomBetween = 2f;
     public Transform[] PatrolPoints;
-    private int CurrentPatrolPoint = 0;
+    [HideInInspector] public int CurrentPatrolPoint = 0;
 
-    [HideInInspector] public bool IsPatrolling = false;
+    public bool IsPatrolling = true;
     private bool StartPatrolling = false;
     private Vector2 CharacterScale;
     private float xScale;
@@ -25,19 +22,21 @@ public class GuardAI : MonoBehaviour
     public float NextWaypointDistance = 1f;
     bool ReachedEndOfPath = false;
     Seeker seeker;
-    private Coroutine Patroll;
+    public Coroutine Patroll = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        IsPatrolling = true;
         seeker = GetComponent<Seeker>();
         rb2d = GetComponent<Rigidbody2D>();
         xScale = transform.localScale.x;
-        Patroll = StartCoroutine(GetPath(PatrolPoints[CurrentPatrolPoint]));
+        //Patroll = StartCoroutine(GetPath(PatrolPoints[CurrentPatrolPoint]));
     }
 
     private void Update()
     {
+        Debug.Log(CurrentPatrolPoint);
         Patrolling();
     }
 
@@ -85,7 +84,6 @@ public class GuardAI : MonoBehaviour
     //Attack
     public void MoveToPlayer(GameObject Player)
     {
-        Debug.Log("Moving");
         if (Path is null) return;
         if (CurrentWayPoint >= Path.vectorPath.Count)
         {
@@ -115,7 +113,7 @@ public class GuardAI : MonoBehaviour
     }
     private void Patrolling()
     {
-        Debug.Log(CurrentPatrolPoint);
+        if (!IsPatrolling) return;
         if (Path is null) return;
         if (CurrentWayPoint >= Path.vectorPath.Count)
         {
@@ -140,7 +138,6 @@ public class GuardAI : MonoBehaviour
 
         Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
         rb2d.velocity = direction * speed;
-        Debug.Log(direction);
 
         float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
 
@@ -148,7 +145,6 @@ public class GuardAI : MonoBehaviour
         {
             CurrentWayPoint++;
         }
-
         /*
         
         for (int i = 0; i < patrol.targets.Length; i++)
@@ -184,7 +180,6 @@ public class GuardAI : MonoBehaviour
     }
 
     */
-
     private void Fighting()
     {
 

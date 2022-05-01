@@ -14,12 +14,12 @@ public class WhiteHead : MonoBehaviour
     private float xScale = 0;
 
     [Header("Movement")]
-    [SerializeField] [Range(0f, 50f)] float speed = 1f;
+    [SerializeField] [Range(0f, 50f)] private float speed = 1f;
     [SerializeField] [Range(0f, 800f)] float angleChangeSpeed = 500f;
     [SerializeField] [Range(0f, 50f)] float attackingSpeed = 5f;
     [SerializeField] [Range(0f, 800f)] float attackingAngleChangeSpeed = 30f;
 
-
+    
     [SerializeField] int Hp = 50;
 
     public int MyHp
