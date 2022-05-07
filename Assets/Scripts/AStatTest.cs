@@ -1,44 +1,39 @@
-using System.Collections;
-using UnityEngine;
 using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 
-public class GuardAI : MonoBehaviour
+public class AStatTest : MonoBehaviour
 {
-    [SerializeField] public int Hp = 5;
-    [SerializeField] float speed = 5f;
-    public float RoomBetween = 2f;
-    public Transform[] PatrolPoints;
-    [HideInInspector] public int CurrentPatrolPoint = 0;
-
-    public bool IsPatrolling = true;
-    private bool StartPatrolling = false;
-    private Vector2 CharacterScale;
-    private float xScale;
-    Rigidbody2D rb2d;
-
-    Seeker seeker;
+    private Rigidbody2D rb2d;
+    public Camera Cam;
+    public GameObject Player;
     Path Path;
+    
     int CurrentWayPoint = 0;
     int CurrentPoint = 0;
     public float NextWaypointDistance = 0.5f;
     // Dunno om hvad den skal bruges, den var med i tutorialen men umiddelbart bruges den heller ikke der
     bool ReachedEndOfPath = false;
     public List<Transform> Points;
-    [HideInInspector] public Vector3 Point;
+    Vector3 Point;
+
+    public bool IsPatrolling = true;
+    private bool Moving = false;
+
+    Seeker seeker;
+    public Coroutine Seek = null;
 
     private void Awake()
     {
         seeker = GetComponent<Seeker>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        IsPatrolling = true;
         rb2d = GetComponent<Rigidbody2D>();
-        xScale = transform.localScale.x;
-        StartCoroutine(GetPath());
+        Seek = StartCoroutine(GetPath());
     }
 
     private void Update()
@@ -71,31 +66,9 @@ public class GuardAI : MonoBehaviour
         }
     }
 
-    #region Living entity variables
-    private void DoIDie()
-    {
-        if (Hp <= 0) Die();
-    }
-
-    private void TakeDamage(int damageTaken)
-    {
-        Hp = Hp - damageTaken;
-        DoIDie();
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
-    #endregion
-
-    //Looking for player
-    //Patrol on Platform
-    //Fighting
-    //Move close enough to attack
-    //Attack
     void Patroll()
     {
+        Debug.Log(CurrentPoint);
         if (Path is null) return;
         if (CurrentWayPoint >= Path.vectorPath.Count)
         {
@@ -103,6 +76,7 @@ public class GuardAI : MonoBehaviour
             CurrentPoint++;
             if (CurrentPoint == Points.Count)
             {
+                Debug.Log("Resetting Path");
                 CurrentPoint = 0;
             }
             Path = null;
@@ -110,8 +84,8 @@ public class GuardAI : MonoBehaviour
         else
         {
             Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
-            Debug.Log(rb2d.velocity);
-            rb2d.velocity = direction * speed;
+            Debug.DrawRay(transform.position, direction, Color.red);
+            rb2d.velocity = direction * 5f;
 
             float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
 
@@ -122,11 +96,12 @@ public class GuardAI : MonoBehaviour
         }
 
         Point = Points[CurrentPoint].position;
+        
     }
 
-    public void Chase()
+    void Chase()
     {
-        //Point = Player.transform.position;
+        Point = Player.transform.position;
         if (Path is null) return;
         if (CurrentWayPoint >= Path.vectorPath.Count)
         {
@@ -136,34 +111,16 @@ public class GuardAI : MonoBehaviour
         {
 
         }
+
         Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
         Debug.DrawRay(transform.position, direction, Color.red);
-        rb2d.velocity = direction * speed;
+        rb2d.velocity = direction * 5f;
 
         float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
+
         if (distance < NextWaypointDistance)
         {
             CurrentWayPoint++;
         }
-    }
-
-    private void FlipSprite()
-    {
-        CharacterScale = transform.localScale;
-        // TODO SKAL GØRES MERE DYNAMISK 
-        if (Input.GetAxis("Horizontal") < 0)
-        {
-            CharacterScale.x = -xScale;
-        }
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            CharacterScale.x = xScale;
-        }
-        transform.localScale = CharacterScale;
-    }
-
-    private void Fighting()
-    {
-
     }
 }
