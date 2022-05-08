@@ -85,8 +85,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCasts()
     {
-        TopL = Physics2D.Raycast(TopLeft, Vector2.left, -SkinWidth * 2, LayerMask.GetMask("Ground"));
-        TopR = Physics2D.Raycast(TopRight, Vector2.right, SkinWidth * 2, LayerMask.GetMask("Ground"));
+        TopL = Physics2D.Raycast(TopLeft, Vector2.left, -SkinWidth * 2, LayerMask.GetMask("Wall"));
+        TopR = Physics2D.Raycast(TopRight, Vector2.right, SkinWidth * 2, LayerMask.GetMask("Wall"));
+        Debug.DrawRay(TopLeft, new Vector2(-0.2f, 0), Color.red);
+        Debug.DrawRay(TopRight, new Vector2(0.2f, 0), Color.blue);
         BotL = Physics2D.Raycast(BottomLeft, Vector2.down, SkinWidth * 2, LayerMask.GetMask("Ground"));
         BotR = Physics2D.Raycast(BottomRight, Vector2.down, SkinWidth * 2, LayerMask.GetMask("Ground"));
     }
@@ -116,7 +118,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && CanDash)
         {
-            StartCoroutine(IDash());
+            if (!WallSlid)
+            {
+                StartCoroutine(IDash());
+            }
+            else
+            {
+                StartCoroutine(IWallDash());
+            }
         }
     }
 
@@ -133,6 +142,20 @@ public class PlayerMovement : MonoBehaviour
         Dashing = false;
         yield return null;
     }
+
+    private IEnumerator IWallDash()
+    {
+        Dashing = true;
+        CanDash = false;
+        rb2d.gravityScale = 0f;
+        rb2d.velocity = new Vector2(-FacingRight * DashSpeed, 0f);
+        yield return new WaitForSeconds(DashTime);
+        rb2d.velocity = new Vector2(0f, 0f);
+        rb2d.gravityScale = 1;
+        Dashing = false;
+        yield return null;
+    }
+
 
     private void Jump()
     {
@@ -173,24 +196,30 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (Dashing)
+        {
+            return;
+        }
+
         if (rb2d.velocity.y > 0f)
         {
             return;
         }
 
+        //kan måske refactors til ikke så mange checks og skulle måske flyttes til et andet sted
         if (Input.GetAxisRaw("Horizontal") == -1 && TopR.collider is null)
         {
             CharacterScale.x = xScale;
             canIJump = true;
             WallSlid = true;
-            rb2d.velocity = new Vector2(0f, -1f);
+            rb2d.velocity = new Vector2(rb2d.velocity.x, SlidingSpeed);
         }
         if (Input.GetAxisRaw("Horizontal") == 1 && TopL.collider is null)
         {
             CharacterScale.x = -xScale;
-            WallSlid = true;
             canIJump = true;
-            rb2d.velocity = new Vector2(0f, -1f);
+            WallSlid = true;
+            rb2d.velocity = new Vector2(rb2d.velocity.x, SlidingSpeed);
         }
         transform.localScale = CharacterScale;
     }
@@ -201,14 +230,16 @@ public class PlayerMovement : MonoBehaviour
     private void OnGround()
     {
         Debug.DrawRay(BottomLeft, new Vector2(0, -0.2f), Color.red);
-
         Debug.DrawRay(BottomRight, new Vector2(0, -0.2f), Color.blue);
 
         if (BotL.collider is not null && !haveJumped || BotR.collider is not null && !haveJumped)
         {
             tempCoyote = coyoteFactor;
             canIJump = true;
-            CanDash = true;
+            if(Dashing == false)
+            {
+                CanDash = true;
+            }
         }
         else
         {
@@ -231,6 +262,7 @@ public class PlayerMovement : MonoBehaviour
         CharacterScale = transform.localScale;
         if (WallSlid == true) return;
         if (WallJumping == true) return;
+        if (Dashing == true) return;
         // TODO SKAL GØRES MERE DYNAMISK 
         if (Input.GetAxis("Horizontal") < 0)
         {

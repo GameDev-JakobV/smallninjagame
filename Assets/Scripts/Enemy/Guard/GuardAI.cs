@@ -3,29 +3,40 @@ using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
 
-public class GuardAI : MonoBehaviour
+public class GuardAI : MonoBehaviour, IEnemyHealth
 {
-    [SerializeField] public int Hp = 5;
-    [SerializeField] float speed = 5f;
-    public float RoomBetween = 2f;
-    public Transform[] PatrolPoints;
-    [HideInInspector] public int CurrentPatrolPoint = 0;
+    [Header("Tweaking")]
+    [SerializeField] private int Health = 50;
+    public int Hp
+    {
+        get { return Health; }
+        set { Health = value; }
+    }
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float RoomBetween = 2f;
 
-    public bool IsPatrolling = true;
+    public GuardAI(float roomBetween)
+    {
+        RoomBetween = roomBetween;
+    }
+
+    [Header("For Pathfinding")]
+    [SerializeField] private float NextWaypointDistance = 0.5f;
+    [SerializeField] private List<Transform> Points;
+
+    [HideInInspector] public bool IsPatrolling = true;
+    [HideInInspector] private int CurrentPatrolPoint = 0;
+    [HideInInspector] public Vector3 Point;
     private bool StartPatrolling = false;
-    private Vector2 CharacterScale;
-    private float xScale;
-    Rigidbody2D rb2d;
+    private int CurrentWayPoint = 0;
+    private int CurrentPoint = 0;
 
+    Rigidbody2D rb2d;
     Seeker seeker;
     Path Path;
-    int CurrentWayPoint = 0;
-    int CurrentPoint = 0;
-    public float NextWaypointDistance = 0.5f;
-    // Dunno om hvad den skal bruges, den var med i tutorialen men umiddelbart bruges den heller ikke der
-    bool ReachedEndOfPath = false;
-    public List<Transform> Points;
-    [HideInInspector] public Vector3 Point;
+
+    private Vector2 CharacterScale;
+    private float xScale;
 
     private void Awake()
     {

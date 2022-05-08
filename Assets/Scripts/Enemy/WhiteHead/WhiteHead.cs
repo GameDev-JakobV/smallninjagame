@@ -2,31 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhiteHead : MonoBehaviour
+public class WhiteHead : MonoBehaviour, IEnemyHealth
 {
     // TODO: Bug hvis white er vinkelret med player og på lige grund, så drejer den ikke altid og kører i en lige linje
+    [Header("Tweaking")]
+    [SerializeField] private int Health = 50;
+    public int Hp
+    {
+        get { return Health; }
+        set { Health = value; }
+    }
 
-
-    Rigidbody2D rb2d;
-    public Vector3 startPosition;
-
-    public bool isAttacking { get; set; }
-    private float xScale = 0;
+    [HideInInspector] public bool isAttacking;
+    private float xScale;
 
     [Header("Movement")]
     [SerializeField] [Range(0f, 50f)] private float speed = 1f;
     [SerializeField] [Range(0f, 800f)] float angleChangeSpeed = 500f;
     [SerializeField] [Range(0f, 50f)] float attackingSpeed = 5f;
     [SerializeField] [Range(0f, 800f)] float attackingAngleChangeSpeed = 30f;
-
     
-    [SerializeField] int Hp = 50;
-
-    public int MyHp
-    {
-        get { return Hp; }
-        set { Hp = value; }
-    }
+    private Rigidbody2D rb2d;
+    private Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +36,6 @@ public class WhiteHead : MonoBehaviour
 
     private void Update()
     {
-
         FlipSprite();
         // TODO add patrol range so that it doesnt look so rigid
         if (!isAttacking)
@@ -48,7 +44,7 @@ public class WhiteHead : MonoBehaviour
         }
     }
 
-    #region Living entity variables
+    #region IEnemyHealth
     private void DoIDie()
     {
         if (Hp <= 0) Die();
