@@ -15,25 +15,19 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
     [SerializeField] private float speed = 5f;
     [SerializeField] private float RoomBetween = 2f;
 
-    public GuardAI(float roomBetween)
-    {
-        RoomBetween = roomBetween;
-    }
-
     [Header("For Pathfinding")]
     [SerializeField] private float NextWaypointDistance = 0.5f;
     [SerializeField] private List<Transform> Points;
 
     [HideInInspector] public bool IsPatrolling = true;
-    [HideInInspector] private int CurrentPatrolPoint = 0;
     [HideInInspector] public Vector3 Point;
-    private bool StartPatrolling = false;
     private int CurrentWayPoint = 0;
     private int CurrentPoint = 0;
 
     Rigidbody2D rb2d;
     Seeker seeker;
     Path Path;
+    public GameObject Dot;
 
     private Vector2 CharacterScale;
     private float xScale;
@@ -102,9 +96,6 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
 
     //Looking for player
     //Patrol on Platform
-    //Fighting
-    //Move close enough to attack
-    //Attack
     void Patroll()
     {
         if (Path is null) return;
@@ -116,12 +107,12 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
             {
                 CurrentPoint = 0;
             }
+            
             Path = null;
         }
         else
         {
             Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
-            Debug.Log(rb2d.velocity);
             rb2d.velocity = direction * speed;
 
             float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
@@ -131,10 +122,12 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
                 CurrentWayPoint++;
             }
         }
-
         Point = Points[CurrentPoint].position;
     }
 
+    //Fighting
+    //Move close enough to attack
+    //Attack
     public void Chase()
     {
         //Point = Player.transform.position;
@@ -147,9 +140,11 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
         {
 
         }
+        
+
         Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
-        Debug.DrawRay(transform.position, direction, Color.red);
-        rb2d.velocity = direction * speed;
+       
+        rb2d.velocity = new Vector2(direction.x * speed, rb2d.velocity.y);
 
         float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
         if (distance < NextWaypointDistance)
@@ -176,5 +171,9 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
     private void Fighting()
     {
 
+        for (int i = 0; i < Path.vectorPath.Count; i++)
+        {
+            Instantiate(Dot, new Vector3(Path.vectorPath[i].x, Path.vectorPath[i].y, 0f), Quaternion.identity);
+        }
     }
 }
