@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 912935427294865589}
   - component: {fileID: 912935427294865591}
   - component: {fileID: 912935427294865590}
+  - component: {fileID: 428095572}
   m_Layer: 10
   m_Name: Guard
   m_TagString: Untagged
@@ -80,13 +81,15 @@ MonoBehaviour:
   Health: 50
   speed: 5
   RoomBetween: 2
-  NextWaypointDistance: 1
+  NextWaypointDistance: 0.5
   Points:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   IsPatrolling: 1
   Point: {x: 0, y: 0, z: 0}
+  Dot: {fileID: 910496770522658326, guid: cd7cb92921f9ca24e844c9eca4b39b2d, type: 3}
+  Jumping: 0
 --- !u!61 &912935427294865591
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -133,7 +136,22 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
+--- !u!114 &428095572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912935427294865596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e46ec0f5c399adf459d755cd1e812aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Duration: 3
+  TimeWaited: 0
+  TimeToWait: 2
 --- !u!1 &912935427350226162
 GameObject:
   m_ObjectHideFlags: 0

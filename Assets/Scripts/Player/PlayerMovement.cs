@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 15f;
     [SerializeField][Range(0f, 0.5f)] private float coyoteFactor = 1f;
-    [SerializeField] private bool canIJump = false;
+    [SerializeField] public bool canIJump = false;
     private float tempCoyote = 0f;
     private bool haveJumped = false;
 
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Wall Slide")]
     [SerializeField] float SlidingSpeed = -2f;
     [SerializeField] float WallJumpHeight = 5f;
-    private bool WallSlid = false;
+    [HideInInspector] public bool WallSlid = false;
     private bool WallJumping = false;
     public float WallJumpTime = 0f;
 

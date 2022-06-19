@@ -17,7 +17,6 @@ public class Bow : MonoBehaviour
     [Header("UI")]
     public GameObject ArrowUI;
     private ArrowUI ArrowUIScript;
-
    
     static float CostOfArrow = 1f;
     private bool IsAiming = false;

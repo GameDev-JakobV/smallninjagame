@@ -31,6 +31,9 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
 
     private Vector2 CharacterScale;
     private float xScale;
+    [HideInInspector] public bool Jumping = false;
+    private JumpWithLerp jumpWithLerp;
+
 
     private void Awake()
     {
@@ -42,12 +45,14 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
     {
         IsPatrolling = true;
         rb2d = GetComponent<Rigidbody2D>();
+        jumpWithLerp = GetComponent<JumpWithLerp>();
         xScale = transform.localScale.x;
         StartCoroutine(GetPath());
     }
 
     private void Update()
     {
+        if (Jumping) return;
         if (IsPatrolling)
         {
             Patroll();
@@ -58,22 +63,9 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
         }
     }
 
-    public IEnumerator GetPath()
+    private void Fighting()
     {
-        while (true)
-        {
-            seeker.StartPath(transform.position, Point, OnPathComplete);
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
 
-    private void OnPathComplete(Path p)
-    {
-        if (!p.error)
-        {
-            Path = p;
-            CurrentWayPoint = 0;
-        }
     }
 
     #region Living entity variables
@@ -94,6 +86,25 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
     }
     #endregion
 
+    public IEnumerator GetPath()
+    {
+        while (true)
+        {
+            seeker.StartPath(transform.position, Point, OnPathComplete);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void OnPathComplete(Path p)
+    {
+        if (!p.error)
+        {
+            Path = p;
+            CurrentWayPoint = 0;
+        }
+    }
+
+
     //Looking for player
     //Patrol on Platform
     void Patroll()
@@ -107,13 +118,14 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
             {
                 CurrentPoint = 0;
             }
-            
+
             Path = null;
         }
         else
         {
             Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
-            rb2d.velocity = direction * speed;
+            rb2d.velocity = new Vector2(direction.x * speed, rb2d.velocity.y);
+
 
             float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
 
@@ -140,10 +152,10 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
         {
 
         }
-        
+
 
         Vector2 direction = (Path.vectorPath[CurrentWayPoint] - transform.position).normalized;
-       
+
         rb2d.velocity = new Vector2(direction.x * speed, rb2d.velocity.y);
 
         float distance = Vector2.Distance(transform.position, Path.vectorPath[CurrentWayPoint]);
@@ -168,12 +180,6 @@ public class GuardAI : MonoBehaviour, IEnemyHealth
         transform.localScale = CharacterScale;
     }
 
-    private void Fighting()
-    {
 
-        for (int i = 0; i < Path.vectorPath.Count; i++)
-        {
-            Instantiate(Dot, new Vector3(Path.vectorPath[i].x, Path.vectorPath[i].y, 0f), Quaternion.identity);
-        }
-    }
+    
 }
